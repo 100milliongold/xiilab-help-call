@@ -12,7 +12,10 @@ import {
   Paper,
   Box,
 } from "@mui/material";
+import { GoogleLoginButton } from "react-social-login-buttons";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { authService } from "firebaseConfig";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 function Copyright(props: any) {
   return (
@@ -41,6 +44,18 @@ const Login: NextPage = () => {
       password: data.get("password"),
     });
   };
+
+  const googleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(authService, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      console.log(credential?.toJSON());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -110,6 +125,8 @@ const Login: NextPage = () => {
             >
               Sign In
             </Button>
+
+            <GoogleLoginButton onClick={googleLogin} />
 
             <Copyright sx={{ mt: 5 }} />
           </Box>
