@@ -23,8 +23,6 @@ export default function MyApp(props: MyAppProps) {
 
   React.useEffect(() => {
     authService.onAuthStateChanged((user) => {
-      console.log(user);
-
       if (user) {
         setIsLoggedIn(true);
       } else {
