@@ -7,6 +7,9 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import { theme, createEmotionCache } from "global";
 import { authService } from "firebaseConfig";
 import Router from "next/router";
+import reducer from "reducers";
+import { useDispatch } from "react-redux";
+import { updateUser } from "reducers";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -15,19 +18,27 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export default function MyApp(props: MyAppProps) {
+function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
   const [init, setInit] = React.useState(false);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(true);
+        dispatch(
+          updateUser({
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+          })
+        );
       } else {
-        setIsLoggedIn(false);
-        Router.push("/login");
+        if (Router.pathname !== "/login") {
+          Router.push("/login");
+        }
       }
       setInit(true);
     });
@@ -47,3 +58,5 @@ export default function MyApp(props: MyAppProps) {
     </CacheProvider>
   );
 }
+
+export default reducer.withRedux(MyApp);

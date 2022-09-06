@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useCallback } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -7,12 +8,18 @@ import { authService } from "firebaseConfig";
 import { signOut } from "firebase/auth";
 import Button from "@mui/material/Button";
 import Router from "next/router";
+import { useDispatch } from "react-redux";
+import { clearUser } from "reducers";
 
 const Home: NextPage = () => {
-  const onLogOutClick = () => {
+  const dispatch = useDispatch();
+
+  const onLogOutClick = useCallback(() => {
     signOut(authService);
     Router.push("/login");
-  };
+    dispatch(clearUser());
+  }, []);
+
   return (
     <Container maxWidth="lg">
       <Box

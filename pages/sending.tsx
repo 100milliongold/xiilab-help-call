@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { dbService } from "firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
+import { authService } from "firebaseConfig";
 
 const Sending: NextPage = () => {
   const [state, setState] = useState<{ [x: string]: string }>({});
@@ -25,6 +26,7 @@ const Sending: NextPage = () => {
         title,
         body,
         createdAt: Date.now(),
+        uid: authService.currentUser?.uid || null,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
