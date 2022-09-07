@@ -3,3 +3,11 @@ export type UserInfo = {
   uid: string;
   name: string | null;
 };
+
+export interface BOARD {
+  body: string;
+  createdAt: number;
+  title: string;
+  uid: string | null;
+  email: string | null;
+}

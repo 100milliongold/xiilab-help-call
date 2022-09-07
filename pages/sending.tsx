@@ -27,6 +27,7 @@ const Sending: NextPage = () => {
         body,
         createdAt: Date.now(),
         uid: authService.currentUser?.uid || null,
+        email: authService.currentUser?.email || null,
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (error) {
