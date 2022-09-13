@@ -5,6 +5,7 @@ export type UserInfo = {
 };
 
 export interface BOARD {
+  id: string;
   body: string;
   createdAt: number;
   title: string;
