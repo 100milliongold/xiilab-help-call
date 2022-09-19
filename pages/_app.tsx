@@ -28,13 +28,6 @@ function MyApp(props: MyAppProps) {
   React.useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        dispatch(
-          updateUser({
-            uid: user.uid,
-            name: user.displayName,
-            email: user.email,
-          })
-        );
       } else {
         if (Router.pathname !== "/login") {
           Router.push("/login");

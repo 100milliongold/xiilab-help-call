@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           MUI v5 + Next.js with TypeScript example
         </Typography>
-        <Link href="/about" color="secondary">
+        <Link href="/board" color="secondary">
           Go to the about page
         </Link>
         <Button onClick={onLogOutClick}>Log Out</Button>
